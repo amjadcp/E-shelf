@@ -1,4 +1,7 @@
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
+
+from rooms.models import Material, Publication, Room
 
 from .forms import CustomUserCreationForm, UserProfileForm
 
@@ -29,7 +32,7 @@ def create_profile(request):
             form = form.save(commit=False)
             form.user = request.user
             form.save()
-            return redirect('rooms:dashboard')
+            return redirect('rooms:home')
     form = UserProfileForm()
 
     context = {
@@ -46,7 +49,7 @@ def profile(request):
             form = form.save(commit=False)
             form.user = request.user
             form.save()
-            return redirect('rooms:dashboard')
+            return redirect('rooms:home')
     form = UserProfileForm()
 
     context = {
@@ -54,3 +57,20 @@ def profile(request):
     }
 
     return render(request, 'profiles/profile.html', context=context)
+
+@login_required
+def dashboard(request):
+    user = request.user
+    rooms = Room.objects.filter(creator=user)
+    publications = Publication.objects.filter(creator=user)
+    materials = Material.objects.filter(creator=user)
+    context ={
+        'user':user,
+        'rooms':len(rooms),
+        'publications':len(publications),
+        'materials':len(materials),
+    }
+    
+    return render(request, 'profiles/dashboard.html', context=context)
+
+

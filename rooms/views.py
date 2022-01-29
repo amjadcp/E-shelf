@@ -6,7 +6,7 @@ from .forms import CreateRoomForm, AddMaterialForm, AddPublicationForm, AddCateg
 from django.db import models
 
 
-def dashboard(request):
+def home(request):
     try:
         profile = UserProfile.objects.get(id=request.user.id)
     except:
@@ -16,7 +16,7 @@ def dashboard(request):
     context = {
         'rooms': rooms,
     }
-    return render(request, 'rooms/dashboard.html', context=context)
+    return render(request, 'rooms/home.html', context=context)
 
 
 @login_required
@@ -27,7 +27,7 @@ def create_room(request):
             form = form.save(commit=False)
             form.creator = request.user
             form.save()
-            return redirect('rooms:dashboard')
+            return redirect('rooms:home')
     form = CreateRoomForm()
     context = {
         'form': form

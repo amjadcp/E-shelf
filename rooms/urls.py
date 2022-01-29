@@ -1,11 +1,11 @@
 from os import name
 from django.urls import path
-from .views import dashboard, create_room, detail_room, add_material, add_publication, list_publications, create_category
+from .views import home, create_room, detail_room, add_material, add_publication, list_publications, create_category
 
 app_name = 'rooms'
 
 urlpatterns = [
-    path('', dashboard, name='dashboard'),
+    path('', home, name='home'),
     path('create/', create_room, name='create'),
     path('<int:id>/', detail_room, name='detail'),
     path('<int:id>/add/', add_material, name='add-material'),
