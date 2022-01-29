@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
-from .models import Material, Room
+from .models import Material, Publication, Room
 from profiles.models import UserProfile
 from .forms import CreateRoomForm, AddMaterialForm
 from django.db import models
@@ -38,9 +38,11 @@ def create_room(request):
 def detail_room(request, id):
     room = Room.objects.get(id=id)
     materials = Material.objects.filter(room__id=id)
+    publications = Publication.objects.filter(room__id=id)
     context = {
         'room': room,
         'materials': materials,
+        'publications': publications,
     }
     return render(request, 'rooms/detail.html', context=context)
 

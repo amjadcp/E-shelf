@@ -5,24 +5,39 @@
 
     <section class="text-gray-600 body-font">
         <div class="container px-5 py-24 mx-auto">
-        <div class="flex justify-center items-center border-b-2 pb-4 mb-10">
-            <div class="mr-20">
+        <div class="flex justify-between items-center mb-10">
+            <div class="flex">
+                <a href="{% url 'rooms:dashboard' %}" class="bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-500">Back</a>
+            </div>
+            <div class="mx-20">
                 <div class="flex-col text-center">
                     <h2 class="text-xs text-blue-500 tracking-widest font-medium title-font mb-1">Learning Resources </h2>
                     <h1 class="sm:text-3xl text-2xl font-medium title-font text-gray-900">{{ room }}</h1>
                 </div>
             </div>
-            <div class="flex">
-                <a href="{% url 'rooms:add-material' room.id %}" class="bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-500">Add Material</a>
-            </div>
+            <div></div>
         </div>
         <div class="flex flex-wrap -m-4">
-            {% if materials is None %}
-            <h1> No Materials </h1>
+            <div class="container px-5 mx-auto border-b-2 pb-2">
+                <div class="flex  justify-between">
+                    <h1 class="font-bold text-xl">Publications</h1>
+                    <div class="flex">
+                        <a href="{% url 'rooms:add-material' room.id %}" class="bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-500">Add Publication</a>
+                    </div>
+                </div>
+            </div>
+            {% if publications|length == 0 %}
+            <div class="flex w-full justify-center pt-10">
+                <div class="flex flex-col items-center">
+                    <img src="/static/svg/empty.svg" alt="empty" class="w-64 h-64 mb-5">
+                    <h1>
+                        No Publications...
+                    </h1>
+                </div>
+            </div>
             {% else %}
-            
-            {% for material in materials %}
-            <div class="p-4 md:w-1/3">
+            {% for publication in publications %}
+            <div class="p-4 md:w-1/3 w-full">
                 <div class="flex rounded-lg h-full bg-gray-100 p-8 flex-col">
                     <div class="flex justify-between items-center mb-3">
                         <div class="flex items-center">
@@ -31,35 +46,66 @@
                                 <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
                                 </svg>
                             </div>
-                            <h2 class="text-gray-900 text-lg title-font font-medium">{{ material }}</h2>
+                            <h2 class="text-gray-900 text-lg title-font font-medium">{{ publication }}</h2>
                         </div>
-                        <img class="w-10 h-10 rounded-xl" src="/static/profiles/{{ material.creator.id }}.jpeg">
+                        <img class="w-10 h-10 rounded-xl" src="/static/profiles/{{ publication.creator.id }}.jpeg">
                         </img>
                         </div>
                     <div class="flex-grow">
-                    <p class="leading-relaxed text-base">{{ material.description }}</p>
-                    {% if material.publication is None %}
-                    <a href="/static/materials/{{ room.name }}/{{ material.filename }}"class="mt-3 text-blue-500 inline-flex items-center">Open
+                    <p class="leading-relaxed text-base">{{ publication.description }}</p>
+                    </div>
+                </div>
+                </div>
+            {% endfor %} 
+            {% endif %}           
+        </div>
+        </div>
+        <div class="container px-5 mx-auto border-b-2 pb-2">
+            <div class="flex  justify-between">
+                <h1 class="font-bold text-xl">Materials</h1>
+                <div class="flex">
+                    <a href="{% url 'rooms:add-material' room.id %}" class="bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-500">Add Material</a>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-wrap lg:w-4/5 sm:mx-auto sm:mb-2 -mx-2">
+            {% if publications|length == 0 %}
+            <div class="flex w-full justify-center pt-10 mb-10">
+                <div class="flex flex-col items-center">
+                    <img src="/static/svg/empty.svg" alt="empty" class="w-64 h-64 mb-5">
+                    <h1>
+                        No Materials...
+                    </h1>
+                </div>
+            </div>
+        
+        {% else %}
+        {% for material in materials %}
+            <div class="p-4 md:w-1/3 w-full">
+                <div class="bg-gray-100 rounded flex p-4 h-full items-center justify-between">
+                <div class="flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="text-blue-500 w-6 h-6 flex-shrink-0 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                    <span class="title-font font-medium">{{ material }}</span>
+                </div>
+                {% if material.publication is None %}
+                    <a href="/static/materials/{{ room.name }}/{{ material.filename }}" class="mt-3 text-blue-500 inline-flex items-center">Download
                         <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
                         <path d="M5 12h14M12 5l7 7-7 7"></path>
                         </svg>
                     </a>
                     {% else %}
-                    <a href="/static/materials/{{ room.name }}/{{ material.publication }}/{{ material.filename }}"class="mt-3 text-blue-500 inline-flex items-center">Open
+                    <a href="/static/materials/{{ room.name }}/{{ material.publication }}/{{ material.filename }}"class="mt-3 text-blue-500 inline-flex items-center">Download
                         <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
                         <path d="M5 12h14M12 5l7 7-7 7"></path>
                         </svg>
                     </a>
                     {% endif %}
-                    
-                    </div>
                 </div>
-                </div>
-            {% endfor %}
-
-            {% endif %}
-            
-        </div>
+            </div>
+        {% endfor %}
+        {% endif %}
         </div>
     </section>
 {% endblock content %}
