@@ -7,5 +7,5 @@ from .models import *
 @login_required(login_url='/login/')
 def dash_board(request):
     email = request.user.email
-    print(Room.objects.filter(creator=email))
+    print(Room.objects.filter(creator__email=email))
     return render(request, 'dash.html')
