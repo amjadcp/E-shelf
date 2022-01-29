@@ -10,7 +10,7 @@ def create_user(request):
         if form.is_valid():
             print('valid')
             form.save()
-            return redirect('profiles:profile')
+            return redirect('login')
     form = CustomUserCreationForm()
 
     context = {

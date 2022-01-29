@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
+from .utils import get_user_profile_name
 
 
 class User(AbstractUser):
@@ -29,7 +30,7 @@ class UserProfile(models.Model):
 
     user = models.OneToOneRel(
         User, on_delete=models.CASCADE, to=None, field_name=None)
-    profile_pic = models.ImageField(upload_to='static/profiles')
+    profile_pic = models.ImageField(upload_to=get_user_profile_name)
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150)
     qualification = models.CharField(max_length=150, choices=QUALIFICATIONS)

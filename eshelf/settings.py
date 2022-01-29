@@ -143,10 +143,10 @@ AUTH_USER_MODEL = 'profiles.User'
 LOGIN_URL = '/login'
 
 # redirect url after login
-LOGIN_REDIRECT_URL = '/profile'
+LOGIN_REDIRECT_URL = '/rooms'
 
 # redirect url after logout
-LOGOUT_REDIRECT_URL = '/login'
+LOGOUT_REDIRECT_URL = '/'
 
 
 # crispy with tailwind

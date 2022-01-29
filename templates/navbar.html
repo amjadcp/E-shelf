@@ -6,16 +6,41 @@
         </svg>
         <span class="ml-3 text-xl">E-Shelf</span>
       </a>
+      {% if user.is_authenticated %}
       <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
-        <a class="mr-5 hover:text-gray-900">First Link</a>
-        <a class="mr-5 hover:text-gray-900">Second Link</a>
-        <a class="mr-5 hover:text-gray-900">Third Link</a>
-        <a class="mr-5 hover:text-gray-900">Fourth Link</a>
+        <a href="{% url 'rooms:dashboard' %}" class="mr-5 hover:text-gray-900">Rooms</a>
+        <a class="mr-5 hover:text-gray-900">Publications</a>
       </nav>
-      <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Button
+      <span class="mr-5">Logged in as: {{ user }}</span>
+      <div class="relative">
+        <img class="w-10 h-10 rounded-xl" src="/static/profiles/{{ user.id }}.jpeg" alt="">
+        <div id="popup" class="hidden right-0 top-20">
+          <a href="{% url 'logout' %}" class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Logout
+            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+              <path d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>
+          </a>
+        </div>
+        
+      </div>
+      
+      {% else %}
+      <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
+        <a href="{% url 'sign-up' %}" class="mr-5 hover:text-gray-900">Sign Up</a>
+      </nav>
+      <a href="{% url 'login' %}" class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Login
         <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
           <path d="M5 12h14M12 5l7 7-7 7"></path>
         </svg>
-      </button>
+      </a>
+      {% endif %}
+      <script>
+        const profile = document.querySelector('img');
+        const popup = document.querySelector('#popup');
+        profile.addEventListener('click', () => {
+          popup.classList.toggle('hidden');
+          popup.classList.toggle('absolute');
+        });
+      </script>
     </div>
   </header>
