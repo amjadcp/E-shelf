@@ -6,12 +6,12 @@ from .forms import CreateRoomForm, AddMaterialForm, AddPublicationForm, AddCateg
 from django.db import models
 
 
-@login_required()
 def dashboard(request):
     try:
         profile = UserProfile.objects.get(id=request.user.id)
     except:
-        return redirect('profiles:profile')
+        if request.user.is_authenticated:
+            return redirect('profiles:profile')
     rooms = Room.objects.all()
     context = {
         'rooms': rooms,
@@ -19,6 +19,7 @@ def dashboard(request):
     return render(request, 'rooms/dashboard.html', context=context)
 
 
+@login_required
 def create_room(request):
     if request.method == 'POST':
         form = CreateRoomForm(request.POST)
@@ -47,6 +48,7 @@ def detail_room(request, id):
     return render(request, 'rooms/detail.html', context=context)
 
 
+@login_required
 def add_material(request, id):
     room = Room.objects.get(id=id)
     if request.method == 'POST':
@@ -67,6 +69,7 @@ def add_material(request, id):
     return render(request, 'rooms/add_material.html', context=context)
 
 
+@login_required
 def add_publication(request, id):
     room = Room.objects.get(id=id)
     if request.method == 'POST':
@@ -99,6 +102,7 @@ def list_publications(request, room_id, id):
     return render(request, 'rooms/publication.html', context=context)
 
 
+@login_required
 def create_category(request):
     if request.method == 'POST':
         form = AddCategoryForm(request.POST)

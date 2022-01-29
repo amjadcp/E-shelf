@@ -50,6 +50,7 @@ class Material(models.Model):
     description = models.TextField(null=True, blank=True)
     filename = models.CharField(max_length=150, blank=True, null=True)
     material = models.FileField(upload_to=get_member_upload_to)
+    created_on = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return f'{self.name}'
