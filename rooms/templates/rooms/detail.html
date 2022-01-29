@@ -4,10 +4,14 @@
 {% include 'navbar.html' %}
 
     <section class="text-gray-600 body-font">
-        <div class="container px-5 py-24 mx-auto">
+        <div class="container px-5 mb-24 mt-10 mx-auto">
         <div class="flex justify-between items-center mb-10">
             <div class="flex">
-                <a href="{% url 'rooms:dashboard' %}" class="bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-500">Back</a>
+                <a href="{% url 'rooms:dashboard' %}" class="text-blue-400 px-4hover:bg-blue-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                      </svg>
+                </a>
             </div>
             <div class="mx-20">
                 <div class="flex-col text-center">
@@ -22,7 +26,7 @@
                 <div class="flex  justify-between">
                     <h1 class="font-bold text-xl">Publications</h1>
                     <div class="flex">
-                        <a href="{% url 'rooms:add-material' room.id %}" class="bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-500">Add Publication</a>
+                        <a href="{% url 'rooms:add-publication' room.id %}" class="bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-500">Add Publication</a>
                     </div>
                 </div>
             </div>
@@ -53,6 +57,11 @@
                         </div>
                     <div class="flex-grow">
                     <p class="leading-relaxed text-base">{{ publication.description }}</p>
+                    <a href="{% url 'rooms:publications' room.id publication.id %}" class="mt-3 text-blue-500 inline-flex items-center">Open Room
+                        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
+                        <path d="M5 12h14M12 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
                     </div>
                 </div>
                 </div>

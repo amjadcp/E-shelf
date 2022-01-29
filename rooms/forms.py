@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Room, Material
+from .models import Room, Material, Publication
 
 
 class CreateRoomForm(ModelForm):
@@ -16,3 +16,8 @@ class AddMaterialForm(ModelForm):
     class Meta:
         model = Material
         fields = ('publication', 'name', 'description', 'material')
+
+class AddPublicationForm(ModelForm):
+    class Meta:
+        model = Publication
+        fields = ('name', 'description')

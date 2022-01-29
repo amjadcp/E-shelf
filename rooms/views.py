@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from .models import Material, Publication, Room
 from profiles.models import UserProfile
-from .forms import CreateRoomForm, AddMaterialForm
+from .forms import CreateRoomForm, AddMaterialForm, AddPublicationForm
 from django.db import models
 
 
@@ -65,3 +65,33 @@ def add_material(request, id):
     }
 
     return render(request, 'rooms/add_material.html', context=context)
+
+
+def add_publication(request, id):
+    room = Room.objects.get(id=id)
+    if request.method == 'POST':
+        form = AddPublicationForm(request.POST)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.creator = request.user
+            form.room = room
+            form.save()
+            return redirect('rooms:detail', id)
+
+    form = AddPublicationForm()
+    context = {
+        'form': form,
+        'room': room,
+    }
+
+    return render(request, 'rooms/add_publication.html', context=context)
+
+
+def list_publications(request, room_id, id):
+    publication = Publication.objects.get(id=id)
+    materials = Material.objects.get(publication=publication)
+    context = {
+        'publication': publication,
+        'materials': materials,
+    }
+    return render(request, 'rooms/publication.html', context=context)
