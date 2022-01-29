@@ -1,6 +1,6 @@
 from os import name
 from django.urls import path
-from .views import dashboard, create_room, detail_room, add_material, add_publication, list_publications
+from .views import dashboard, create_room, detail_room, add_material, add_publication, list_publications, create_category
 
 app_name = 'rooms'
 
@@ -12,4 +12,5 @@ urlpatterns = [
     path('<int:id>/add/publication/', add_publication, name='add-publication'),
     path('<int:room_id>/add/publication/<int:id>/',
          list_publications, name='publications'),
+    path('category/create/', create_category, name='create-category')
 ]

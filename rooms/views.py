@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from .models import Material, Publication, Room
 from profiles.models import UserProfile
-from .forms import CreateRoomForm, AddMaterialForm, AddPublicationForm
+from .forms import CreateRoomForm, AddMaterialForm, AddPublicationForm, AddCategoryForm
 from django.db import models
 
 
@@ -37,7 +37,7 @@ def create_room(request):
 
 def detail_room(request, id):
     room = Room.objects.get(id=id)
-    materials = Material.objects.filter(room__id=id)
+    materials = Material.objects.filter(room__id=id, publication=None)
     publications = Publication.objects.filter(room__id=id)
     context = {
         'room': room,
@@ -88,10 +88,28 @@ def add_publication(request, id):
 
 
 def list_publications(request, room_id, id):
+    room = Room.objects.get(id=room_id)
     publication = Publication.objects.get(id=id)
-    materials = Material.objects.get(publication=publication)
+    materials = Material.objects.filter(publication=id)
     context = {
+        'room': room,
         'publication': publication,
         'materials': materials,
     }
     return render(request, 'rooms/publication.html', context=context)
+
+
+def create_category(request):
+    if request.method == 'POST':
+        form = AddCategoryForm(request.POST)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.creator = request.user
+            form.save()
+            return redirect('rooms:create')
+    form = AddCategoryForm()
+    context = {
+        'form': form
+    }
+
+    return render(request, 'rooms/create_category.html', context=context)

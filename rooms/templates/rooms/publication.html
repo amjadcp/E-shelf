@@ -5,9 +5,9 @@
 
     <section class="text-gray-600 body-font">
         <div class="container px-5 mb-24 mt-10 mx-auto">
-        <div class="flex justify-between items-center mb-10">
+        <div class="flex justify-between items-center mb-10  border-b-2 pb-2">
             <div class="flex">
-                <a href="{% url 'rooms:dashboard' %}" class="text-blue-400 px-4hover:bg-blue-500">
+                <a href="{% url 'rooms:detail' room.id %}" class="text-blue-400 px-4hover:bg-blue-500">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                       </svg>
@@ -15,14 +15,16 @@
             </div>
             <div class="mx-20">
                 <div class="flex-col text-center">
-                    <h2 class="text-xs text-blue-500 tracking-widest font-medium title-font mb-1">Publications</h2>
+                    <h2 class="text-xs text-blue-500 tracking-widest font-medium title-font mb-1">{{ room }}</h2>
                     <h1 class="sm:text-3xl text-2xl font-medium title-font text-gray-900">{{ publication }}</h1>
                 </div>
             </div>
-            <div></div>
+            <div class="flex">
+                <a href="{% url 'rooms:add-material' room.id %}" class="bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-500">Add Material</a>
+            </div>
         </div>
         <div class="flex flex-wrap lg:w-4/5 sm:mx-auto sm:mb-2 -mx-2">
-            {% if publications|length == 0 %}
+            {% if materials|length == 0 %}
             <div class="flex w-full justify-center pt-10 mb-10">
                 <div class="flex flex-col items-center">
                     <img src="/static/svg/empty.svg" alt="empty" class="w-64 h-64 mb-5">
