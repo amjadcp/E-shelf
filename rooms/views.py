@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from .models import Material, Publication, Room
@@ -117,3 +118,33 @@ def create_category(request):
     }
 
     return render(request, 'rooms/create_category.html', context=context)
+
+@login_required
+def contrib_rooms(request):
+    user = request.user
+    rooms = Room.objects.filter(creator=user)
+    context = {
+        "title" : 'Rooms',
+        'lists' : rooms
+    }
+    return render(request, 'rooms/contrib_list.html', context=context)
+
+@login_required
+def contrib_publications(request):
+    user = request.user
+    publications = Publication.objects.filter(creator=user)
+    context = {
+        "title" : 'Publications',
+        'lists' : publications
+    }
+    return render(request, 'rooms/contrib_list.html', context=context)
+
+@login_required
+def contrib_materials(request):
+    user = request.user
+    materials = Material.objects.filter(creator=user)
+    context = {
+        "title" : 'Materials',
+        'lists' : materials
+    }
+    return render(request, 'rooms/contrib_list.html', context=context)
