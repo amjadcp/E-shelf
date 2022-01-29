@@ -4,18 +4,15 @@
 <div class="flex justify-center mt-20">
     <form class="shadow-lg rounded-lg p-10" method="post">
         <div class="flex justify-start mb-5 border-b-2 pb-2 font-bold text-lg border-blue-400">
-            <h1>Login</h1>
+            <h1>Sign Up</h1>
         </div>
         <div class="flex justify-end mb-10 text-blue-500 font-bold">
-            <a href="{% url 'sign-up' %}">Sign Up</a>
+            <a href="{% url 'login' %}">Login</a>
         </div>
         {% csrf_token %}
         {{ form | crispy }}
-        <div class="flex justify-end">
-            <a href="" class="text-blue-500">Forget password?</a>
-        </div>
         <div class="flex justify-center mt-10">
-            <input class="bg-blue-400 hover:bg-blue-500 rounded-lg py-2 px-4 text-white cursor-pointer" type="submit" value="Login">
+            <input class="bg-blue-400 hover:bg-blue-500 rounded-lg p-2 text-white cursor-pointer" type="submit" value="Sign Up">
         </div>
     </form>
 </div>
