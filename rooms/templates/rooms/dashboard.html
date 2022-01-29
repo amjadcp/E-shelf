@@ -17,8 +17,15 @@
             </div>
         </div>
         <div class="flex flex-wrap -m-4">
-            {% if rooms is None %}
-            <h1> No rooms </h1>
+            {% if rooms|length == 0 %}
+            <div class="flex w-full justify-center pt-10 mb-10">
+                <div class="flex flex-col items-center">
+                    <img src="/static/svg/empty.svg" alt="empty" class="w-64 h-64 mb-5">
+                    <h1>
+                        No Rooms
+                    </h1>
+                </div>
+            </div>
             {% else %}
             
             {% for room in rooms %}

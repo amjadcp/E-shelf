@@ -27,7 +27,7 @@ def create_profile(request):
             form = form.save(commit=False)
             form.user = request.user
             form.save()
-            return HttpResponse('full sett')
+            return redirect('rooms:dashboard')
     form = UserProfileForm()
 
     context = {
